@@ -1,0 +1,41 @@
+
+resource "local_file" "ansible_inventory"{
+  content = templatefile("./templates/inventory.tmpl",
+  {
+    webserver_private_ip  = openstack_compute_instance_v2.server-webserver.access_ip_v4,
+    floating_ip           = openstack_networking_floatingip_v2.ip-ping.address,
+    identity              = var.identity_file
+  }
+  )
+  filename = "${var.ansible_files_relative_path}/inventory"
+}
+
+resource "local_file" "ansible_webservers_group_var"{
+  content = templatefile("./templates/group_vars/webservers.tmpl",
+  {
+    #apache_port  = var.apache_listening_port
+    apache_port  = var.web_ports_open[2]
+  }
+  )
+  filename = "${var.ansible_files_relative_path}/group_vars/webservers.yml"
+}
+
+
+
+
+resource "null_resource" "ansible-deploy" {
+
+  depends_on = [
+                 openstack_compute_floatingip_associate_v2.server-webserver-ip,
+                 local_file.ansible_webservers_group_var,
+                 local_file.ansible_inventory,
+                 openstack_compute_instance_v2.server-webserver,
+                 null_resource.wait_ssh_ping,
+                 null_resource.wait_ssh_webserver
+                 ]
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ../ansible-with-terraform/inventory ../ansible-with-terraform/webservers.yml --extra-vars=\"ansible_ssh_private_key_file=${var.identity_file}\""
+
+  }
+}

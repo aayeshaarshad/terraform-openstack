@@ -1,0 +1,4 @@
+[webservers]
+%{ for ip in ips ~}
+${ip}
+%{ endfor ~}
