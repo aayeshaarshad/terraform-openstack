@@ -37,9 +37,9 @@ variable "flavor_id" {
 }
 
 variable "server_image_id" {
-  type    = string
-  default = "0e2d42aa-310c-4b3d-ae60-717d4e5fde53"
-  description ="Ubuntu minimal 22.04.1"
+  type        = string
+  default     = "0e2d42aa-310c-4b3d-ae60-717d4e5fde53"
+  description = "Ubuntu minimal 22.04.1"
 }
 
 variable "availability_zone" {
@@ -58,24 +58,34 @@ variable "server_name" {
 }
 
 variable "loadbalancer_name" {
-  type = string
+  type    = string
   default = "loadBalancer4me307tf"
 }
 
 variable "ansible_inventory" {
   type    = string
-  default =  "../ansible/inventory"
+  default = "../ansible/inventory"
+}
+
+variable "ansible_nginx_cfg" {
+  type    = string
+  default = "../ansible/nginx.cfg"
+}
+
+variable "ansible_nginx_cfg_tmpl" {
+  type    = string
+  default = "../ansible/nginx.cfg.tmpl"
 }
 
 variable "key_pair_private_key" {
   type    = string
-  default =  "../ansible/private_key_file"
+  default = "../ansible/private_key_file"
 }
 
 variable "identity_file" {
   type    = string
   default = "Please export an environment variable TF_VAR_identity_file with the path to your key for ansible machine"
-}  
+}
 
 # variable "apache_listening_port" {
 #   type    = string

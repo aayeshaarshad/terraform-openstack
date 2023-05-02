@@ -3,7 +3,7 @@
 # Instructions from: https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs
 # Define the providers --> openstack in our case
 terraform {
-required_version = ">= 0.14.0"
+  required_version = ">= 0.14.0"
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
@@ -27,13 +27,14 @@ required_version = ">= 0.14.0"
 # }
 
 provider "openstack" {
+  use_octavia = true
   user_name   = "aa225zq-4me307"
   password    = ""
-  #auth_url    = "https://cscloud.lnu.se:5000/v3"
+  auth_url    = "https://cscloud.lnu.se:5000/v3"
 
-  auth_url = "https://cscloud.lnu.se:5000"
-  region      = "RegionOne"
-  #user_domain_name = "default"
-  tenant_name = "aa225zq-4me307-vt23"
-  tenant_id = "1bed87b36b5941f9a8cac39cc94fb63d"
+  #auth_url = "https://cscloud.lnu.se:5000"
+  region           = "RegionOne"
+  user_domain_name = "default"
+  #tenant_name = "aa225zq-4me307-vt23"
+  #tenant_id = "1bed87b36b5941f9a8cac39cc94fb63d"
 }

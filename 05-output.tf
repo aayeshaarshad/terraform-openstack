@@ -7,7 +7,7 @@
 
 
 # resource "null_resource" "wait_ssh_webserver" {
- 
+
 #   connection {
 #     type     = "ssh"
 #     user     = "ubuntu"
